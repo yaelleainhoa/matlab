@@ -20,11 +20,11 @@ while (i<Imax && e>eta)
   nr=norm(r);
   e = norm(Z-Z1);
 
-%     if(mod(i,10) ==0)
-%       fprintf('||z_k - z_(k-1)||=%e, grad(J).z_k=%d\n',e,nr);
-%     end
+    if(mod(i,10) ==0)
+      fprintf('||z_k - z_(k-1)||=%e, grad(J).z_k=%d\n',e,nr);
+    end
   % On insère le nouveau résidu dans notre tableau pour le trackinb ; 
-  resi=[resi;nr]; 
+  resi=[resi;e]; 
 
   % Si le résidu devient trop brand, sans doute il est temps d'en rester
   % là ...

@@ -21,7 +21,7 @@ figure (1);
 %! Definition des matrices
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-N=500;          % taille du probleme
+N=1000;          % taille du probleme
 fprintf('N=%i\n',N);
 
 Mtot=40.0;             %masse totale de la chaîne
@@ -61,8 +61,8 @@ H=[A ON  ; ON A];
 L1= 4*omega*sin(pi/(2*(2*N+1)))^2;
 L2N= 4*omega*sin(N*pi/(2*N+1))^2;
 
-eta=1.e-4;      % residu desire'
-Imax=1000;	% nombre d'iterations maximal
+eta=1.e-3;      % residu desire'
+Imax=10000;	% nombre d'iterations maximal
 
 
 
@@ -109,7 +109,7 @@ switch EXERCICE
         fprintf('eta=%5.2e; eta2=%5.2e\n',eta,eta2);
         timer();
         tic;
-        [u,n,Residu_u]=GP(H,g,f,zini,eta2,rho,10*Imax);
+        [u,n,Residu_u]=GP(H,g,f,zini,10^(-6),rho,100000000000);
         t=toc;
         fprintf('temps=%5.2f, Iterations:%5i, ||U^k-U^{k-1}||=%10.2e\n',t,n,Residu_u(end));
         
@@ -150,19 +150,20 @@ switch EXERCICE
         % Définir la matrice C, vecteur f
 %         f= 0.75:0.05/(N-1):0.8;
 %         f=-f';
-        f= -0.5*ones(N,1);
+        f= -0.6*ones(N,1);
        
-        C=[ON, -eye(N)];
+        C=[0.1*eye(N), -eye(N)];
         
         rho=L1;
-        gamma=(L2N-L1)./(L2N+L1);
-        eta=(1-gamma)./gamma * eta;
-  
-        Eps=1e-5;
+        gamma=(L2N-L1)/(L2N+L1);
+       % Eps=(1-gamma)/gamma * eta;
+        Eps=10^(-6);
         Lambda0=zeros(size(f));
         fprintf('RESOLUTION PAR UZAWA:\n');
+        fprintf('eta=%5.2e; Eps=%5.2e\n',eta,Eps);
+
         tic;
-        [u,Lambda,n,Residu_Lambda,Residu_u] = UZAWA(H,C,-g,f,Lambda0,rho,eta,Eps,Imax);
+        [u,Lambda,n,Residu_Lambda,Residu_u] = UZAWA(H,C,-g,f,Lambda0,rho,eta,Eps,1000*Imax);
         t=toc;
 
         %  compléter pour les graphiques 
@@ -174,8 +175,8 @@ switch EXERCICE
         hold on
         fprintf('temps=%5.2f, Iterations:%5i, ||U^k-U^{k-1}||=%10.2e\n',t,n,Residu_u(end));
         
-        plot(xx,  [0.5;-f;0.5], 'k', 'Linewidth', 2);
-        legend('Solution','Obstacle');
+       % plot(xx,  [0.5;-f;0.5], 'k', 'Linewidth', 2);
+       % legend('Solution','Obstacle');
         
 end
 
