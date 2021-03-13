@@ -10,9 +10,9 @@ close ();
 global PRINT
 
 % EXERCICE='Exo1';
-% EXERCICE='Exo2';
+ EXERCICE='Exo2';
 % EXERCICE='Exo2b';
- EXERCICE='Exo3';
+% EXERCICE='Exo3';
 
 figure (1);
 
@@ -21,7 +21,7 @@ figure (1);
 %! Definition des matrices
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-N=1000;          % taille du probleme
+N=100;          % taille du probleme
 fprintf('N=%i\n',N);
 
 Mtot=40.0;             %masse totale de la chaîne
@@ -49,9 +49,10 @@ H=[A ON  ; ON A];
  g=zeros(2*N,1);
  g(1)=omega*x0;
  g(N)=omega*xf;
- for i=N+1:2*N
-     g(i)=-g0*mi;
- end
+ g(N+1:2*N)=-g0*mi*ones(N,1);
+%  for i=N+1:2*N
+%      g(i)=-g0*mi;
+%  end
  g(N+1)=g(N+1)+omega*y0;
  g(2*N)=g(2*N)+omega*yf;
  
@@ -128,6 +129,7 @@ switch EXERCICE
         legend('Solution','Obstacle');
        
     case 'Exo2b'
+        % construction des graphes pour eta et gamma
         t_N=10:10:1000;
         log_N=log(t_N);
         L1= 4*omega*sin(pi./(2*(2*t_N+1))).^2;
@@ -148,16 +150,14 @@ switch EXERCICE
     case 'Exo3'
         
         % Définir la matrice C, vecteur f
-%         f= 0.75:0.05/(N-1):0.8;
-%         f=-f';
         f= -0.6*ones(N,1);
        
         C=[0.1*eye(N), -eye(N)];
         
         rho=L1;
         gamma=(L2N-L1)/(L2N+L1);
-       % Eps=(1-gamma)/gamma * eta;
-        Eps=10^(-6);
+        Eps=(1-gamma)/gamma * eta;
+       % Eps=10^(-6);
         Lambda0=zeros(size(f));
         fprintf('RESOLUTION PAR UZAWA:\n');
         fprintf('eta=%5.2e; Eps=%5.2e\n',eta,Eps);
