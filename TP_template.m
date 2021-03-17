@@ -10,8 +10,8 @@ close ();
 global PRINT
 
 % EXERCICE='Exo1';
- EXERCICE='Exo2';
-% EXERCICE='Exo2b';
+% EXERCICE='Exo2';
+ EXERCICE='Exo2b';
 % EXERCICE='Exo3';
 
 figure (1);
@@ -50,9 +50,6 @@ H=[A ON  ; ON A];
  g(1)=omega*x0;
  g(N)=omega*xf;
  g(N+1:2*N)=-g0*mi*ones(N,1);
-%  for i=N+1:2*N
-%      g(i)=-g0*mi;
-%  end
  g(N+1)=g(N+1)+omega*y0;
  g(2*N)=g(2*N)+omega*yf;
  
@@ -130,7 +127,7 @@ switch EXERCICE
        
     case 'Exo2b'
         % construction des graphes pour eta et gamma
-        t_N=10:10:10000000;
+        t_N=10:10:10000;
         log_N=log(t_N);
         omega=70*(t_N+1); 
         
@@ -141,13 +138,13 @@ switch EXERCICE
         gamma=(L2N-L1)./(L2N+L1);
         eta=(1-gamma)./gamma * 10^(-4);
         
-       semilogx(t_N,gamma,'k','Linewidth',2);
-       xlabel('N');
-       ylabel('\gamma');
-        
-%        semilogx(t_N,eta,'k','Linewidth',2);
+%        semilogx(t_N,gamma,'k','Linewidth',2);
 %        xlabel('N');
-%        ylabel('\eta');  
+%        ylabel('\gamma');
+        
+       semilogx(t_N,eta,'k','Linewidth',2);
+       xlabel('N');
+       ylabel('\eta');  
         
     case 'Exo3'
         
