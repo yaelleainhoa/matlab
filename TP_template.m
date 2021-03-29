@@ -11,8 +11,8 @@ global PRINT
 
 % EXERCICE='Exo1';
 % EXERCICE='Exo2';
- EXERCICE='Exo2b';
-% EXERCICE='Exo3';
+% EXERCICE='Exo2b';
+ EXERCICE='Exo3';
 
 figure (1);
 
@@ -21,7 +21,7 @@ figure (1);
 %! Definition des matrices
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-N=250;          % taille du probleme
+N=1000;          % taille du probleme
 fprintf('N=%i\n',N);
 
 Mtot=40.0;             %masse totale de la chaîne
@@ -150,15 +150,15 @@ switch EXERCICE
         
         % Définir la matrice C, vecteur f
         
-        f= -0.5*ones(N,1);
-       % f= -0.6*ones(N,1);
-        C=[ ON , -eye(N)];
-       % C=[0.1*eye(N), -eye(N)];
+       % f= -0.5*ones(N,1);
+        f= -0.6*ones(N,1);
+       % C=[ ON , -eye(N)];
+        C=[0.1*eye(N), -eye(N)];
         
         rho=L1;
         gamma=(L2N-L1)/(L2N+L1);
         Eps=(1-gamma)/gamma * eta;
-     %   Eps=10^(-6);
+      %  Eps=10^(-6);
         Lambda0=zeros(size(f));
         fprintf('RESOLUTION PAR UZAWA:\n');
         fprintf('eta=%5.2e; Eps=%5.2e\n',eta,Eps);
